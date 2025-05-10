@@ -4250,19 +4250,17 @@
     }
     const da = new DynamicAdapt("max");
     da.init();
-    document.addEventListener("DOMContentLoaded", (() => {
-        const select = document.querySelector(".select");
-        if (!select) return;
-        const selectContent = select.querySelector(".select__content");
-        const selectOptions = select.querySelectorAll(".select__option");
-        const path = window.location.pathname;
-        const currentLang = path.includes("en") ? "EN" : "UA";
-        selectOptions.forEach((option => {
-            if (option.textContent.trim() === currentLang) {
-                selectContent.textContent = option.textContent.trim();
-                selectOptions.forEach((opt => opt.hidden = false));
-                option.hidden = true;
-            }
+    document.addEventListener("DOMContentLoaded", (function() {
+        const select = document.querySelector(".actions-header__lang");
+        const currentPage = window.location.pathname;
+        let selectedValue = "UA";
+        if (currentPage.includes("index-en.html")) selectedValue = "EN";
+        select.value = selectedValue;
+        const customSelectValue = document.querySelector(".select__content");
+        if (customSelectValue) customSelectValue.textContent = selectedValue;
+        const customOptions = document.querySelectorAll(".select__option");
+        customOptions.forEach((option => {
+            if (option.dataset.value === selectedValue) option.hidden = true; else option.hidden = false;
         }));
     }));
     document.addEventListener("DOMContentLoaded", (function() {
