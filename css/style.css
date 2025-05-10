@@ -198,7 +198,7 @@ textarea::placeholder {
   width: 11px;
   height: 6px;
   transition: all .3s ease 0s;
-  background: url(../../../img/icons/select-arrow.svg) 0 0 no-repeat
+  background: url(../img/icons/select-arrow.svg) 0 0 no-repeat
 }
 ._select-open .select__value:after {
   -webkit-transform: rotate(-180deg);
@@ -2049,6 +2049,16 @@ button.swiper-pagination-bullet {
     -webkit-transform: translateX(0);
     transform: translateX(0)
   }
+  .anim-hero__video {
+    width: 12.1875rem;
+    height: 28.125rem
+  }
+  .anim-hero__block--left {
+    left: -62%
+  }
+  .anim-hero__block--right {
+    right: -62%
+  }
   .business-benefits {
     padding-bottom: 1.875rem
   }
@@ -2267,10 +2277,10 @@ button.swiper-pagination-bullet {
     width: 5.625rem
   }
   .anim-hero__block--left {
-    left: -62%
+    left: -40%
   }
   .anim-hero__block--right {
-    right: -62%
+    right: -40%
   }
   .anim-hero__title {
     font-size: .625rem
@@ -2391,6 +2401,21 @@ button.swiper-pagination-bullet {
   .form__button {
     padding-top: .9375rem;
     padding-bottom: .9375rem
+  }
+}
+@media (max-width:23.75em) {
+  .anim-hero__video {
+    width: 9.75rem;
+    height: 22.5rem
+  }
+  .anim-hero__block {
+    width: 5.625rem
+  }
+  .anim-hero__block--left {
+    left: -52%
+  }
+  .anim-hero__block--right {
+    right: -52%
   }
 }
 @media (min-width:20em)and (max-width:110em) {

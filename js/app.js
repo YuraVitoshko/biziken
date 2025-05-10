@@ -4265,26 +4265,59 @@
             }
         }));
     }));
-    document.querySelector(".connect__form").addEventListener("submit", (async function(e) {
-        e.preventDefault();
-        const name = document.querySelector('input[name="name"]').value;
-        const tel = document.querySelector('input[name="tel"]').value;
-        const email = document.querySelector('input[name="email"]').value;
-        const text = document.querySelector('textarea[name="text"]').value;
-        const cardName = `Заявка від ${name}`;
-        const cardDesc = `Телефон: ${tel}\nEmail: ${email}\nЗапит: ${text}`;
-        const listId = "681a3f4bee210c3b233df95d";
-        const key = "36d3b1dea1fe96896dd64f81a6caa2d6";
-        const token = "ATTA603c4aa8f9dbd9f21d7b8d1e31ec70b801803b62475120c09151d810b39611ad71F8D0BB";
-        const url = `https://api.trello.com/1/cards?key=${key}&token=${token}&idList=${listId}&name=${encodeURIComponent(cardName)}&desc=${encodeURIComponent(cardDesc)}`;
-        try {
-            const response = await fetch(url, {
-                method: "POST"
-            });
-            if (response.ok) alert("Заявку надіслано успішно!"); else alert("Помилка при надсиланні заявки");
-        } catch (err) {
-            alert("Сталася помилка при підключенні до Trello");
-        }
+    document.addEventListener("DOMContentLoaded", (function() {
+        const form = document.querySelector(".connect__form");
+        const telInput = form.querySelector('input[name="tel"]');
+        telInput.addEventListener("input", (function() {
+            this.value = this.value.replace(/\D/g, "");
+        }));
+        form.addEventListener("submit", (async function(e) {
+            e.preventDefault();
+            const name = form.name.value.trim();
+            const tel = form.tel.value.trim();
+            const email = form.email.value.trim();
+            const text = form.text.value.trim();
+            let isValid = true;
+            let errorMessage = "";
+            if (name === "") {
+                isValid = false;
+                errorMessage += "Будь ласка, введіть ім’я.\n";
+            }
+            if (tel.length < 7 || tel.length > 15) {
+                isValid = false;
+                errorMessage += "Введіть коректний номер телефону (від 7 до 15 цифр).\n";
+            }
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                isValid = false;
+                errorMessage += "Введіть коректний E-mail.\n";
+            }
+            if (text === "") {
+                isValid = false;
+                errorMessage += "Будь ласка, введіть свій запит.\n";
+            }
+            if (!isValid) {
+                alert(errorMessage);
+                return;
+            }
+            const cardName = `Заявка від ${name}`;
+            const cardDesc = `Телефон: ${tel}\nEmail: ${email}\nЗапит: ${text}`;
+            const listId = "681a3f4bee210c3b233df95d";
+            const key = "36d3b1dea1fe96896dd64f81a6caa2d6";
+            const token = "ATTA603c4aa8f9dbd9f21d7b8d1e31ec70b801803b62475120c09151d810b39611ad71F8D0BB";
+            const url = `https://api.trello.com/1/cards?key=${key}&token=${token}&idList=${listId}&name=${encodeURIComponent(cardName)}&desc=${encodeURIComponent(cardDesc)}`;
+            try {
+                const response = await fetch(url, {
+                    method: "POST"
+                });
+                if (response.ok) {
+                    alert("Заявку надіслано успішно!");
+                    form.reset();
+                } else alert("Помилка при надсиланні заявки");
+            } catch (err) {
+                alert("Сталася помилка при підключенні до Trello");
+            }
+        }));
     }));
     window["FLS"] = true;
     menuInit();
